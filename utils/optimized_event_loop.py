@@ -1,4 +1,5 @@
-import importlib
+from importlib.util import find_spec
+from importlib import import_module
 import platform
 import subprocess
 from contextlib import suppress
@@ -12,10 +13,10 @@ def setup_optimized_event_loop():
     loop_module = "winloop" if is_windows else "uvloop"
 
     # 检查模块是否已安装
-    if importlib.util.find_spec(loop_module) is not None:
+    if find_spec(loop_module) is not None:
         # 动态导入并安装事件循环
         with suppress(Exception):
-            module = importlib.import_module(loop_module)
+            module = import_module(loop_module)
             module.install()
             logger.info(f"{loop_module} 已启用")
             return True
@@ -33,7 +34,7 @@ def setup_optimized_event_loop():
         if result.returncode == 0:
             # 安装成功，重新尝试加载模块
             logger.info(f"{loop_module} 安装成功")
-            module = importlib.import_module(loop_module)
+            module = import_module(loop_module)
             module.install()
             logger.info(f"{loop_module} 已启用")
             return True
