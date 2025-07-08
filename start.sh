@@ -2,14 +2,25 @@
 
 CONTAINER_NAME=tg-bot-template  # bot 容器名称
 
+# 构建镜像
+build_image() {
+    echo "正在构建镜像..."
+    docker build -t $CONTAINER_NAME .
+    echo "镜像构建成功！"
+}
+
 # 启动容器
 start_container() {
     echo "正在启动容器..."
-    docker build -t $CONTAINER_NAME .
-    docker rm -f $CONTAINER_NAME || true
     docker run -d --restart=always --name $CONTAINER_NAME $CONTAINER_NAME
     echo "容器启动成功！"
     show_logs
+}
+
+# 构建&启动容器
+build_and_start_container() {
+    build_image
+    start_container
 }
 
 # 停止容器
@@ -26,7 +37,6 @@ restart_container() {
     stop_container
     start_container
     echo "容器重启成功！"
-    show_logs
 }
 
 # 查看日志
@@ -59,7 +69,7 @@ show_help() {
 # 主逻辑
 case "${1:-start}" in
     start)
-        start_container
+        build_and_start_container
         ;;
     stop)
         stop_container
