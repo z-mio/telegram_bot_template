@@ -20,6 +20,7 @@ start_container() {
 # 构建&启动容器
 build_and_start_container() {
     build_image
+    docker rm -f $CONTAINER_NAME || true
     start_container
 }
 
