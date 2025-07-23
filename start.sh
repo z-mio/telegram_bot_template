@@ -12,7 +12,7 @@ build_image() {
 # 启动容器
 start_container() {
     echo "正在启动容器..."
-    docker run -d --restart=always --name $CONTAINER_NAME $CONTAINER_NAME
+    docker run -d --restart=always --env-file .env --name $CONTAINER_NAME $CONTAINER_NAME
     echo "容器启动成功！"
     show_logs
 }
