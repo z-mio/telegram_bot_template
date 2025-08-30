@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.12"
 
 [[package]]
@@ -13,15 +13,15 @@ wheels = [
 
 [[package]]
 name = "kurigram"
-version = "2.2.3"
+version = "2.2.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pyaes" },
     { name = "pysocks" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a5/99/7fbc6c6d7d548d69576ad616f060d39a94c271ab4e63bd751b9288df6b98/kurigram-2.2.3.tar.gz", hash = "sha256:8c986dc4646412a84208db5404bdd1b4bb06c39ca6787b4d1c2425a97ee21087", size = 503967, upload-time = "2025-05-11T14:21:50.914Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ee/42/7247c1f32e42e05e5d9c0c3a59735246430e20431b519c79ebba485e1ea4/kurigram-2.2.9.tar.gz", hash = "sha256:2b2bc468c8953edb496115d41954d17209574913c91fd269c14cf7efb3e8138b", size = 513073, upload-time = "2025-08-25T11:14:28.438Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a3/b4/70f254d026bf1b4730e6c5ab2394b7279ef5e4a0a24a6eed89a04640dfc9/kurigram-2.2.3-py3-none-any.whl", hash = "sha256:60b01fdb7094dab1d704fd794ce84feb6798c96c212457d19a80aa96f0104f62", size = 4927740, upload-time = "2025-05-11T14:21:49.159Z" },
+    { url = "https://files.pythonhosted.org/packages/86/45/943a6a313b6683634dfbc03bd204b93f78cdb7a5a2b1ce0c138274f82fe2/kurigram-2.2.9-py3-none-any.whl", hash = "sha256:2e7834de8289b360362e4702747caa2ee6000ddf4cdb8780ba2057b618f7b773", size = 5013612, upload-time = "2025-08-25T11:14:26.466Z" },
 ]
 
 [[package]]
@@ -54,11 +54,11 @@ wheels = [
 
 [[package]]
 name = "python-dotenv"
-version = "1.1.0"
+version = "1.1.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/88/2c/7bb1416c5620485aa793f2de31d3df393d3686aa8a8506d11e10e13c5baf/python_dotenv-1.1.0.tar.gz", hash = "sha256:41f90bc6f5f177fb41f53e87666db362025010eb28f60a01c9143bfa33a2b2d5", size = 39920, upload-time = "2025-03-25T10:14:56.835Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f6/b0/4bc07ccd3572a2f9df7e6782f52b0c6c90dcbb803ac4a167702d7d0dfe1e/python_dotenv-1.1.1.tar.gz", hash = "sha256:a8a6399716257f45be6a007360200409fce5cda2661e3dec71d23dc15f6189ab", size = 41978, upload-time = "2025-06-24T04:21:07.341Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1e/18/98a99ad95133c6a6e2005fe89faedf294a748bd5dc803008059409ac9b1e/python_dotenv-1.1.0-py3-none-any.whl", hash = "sha256:d7c01d9e2293916c18baf562d95698754b0dbbb5e74d457c45d4f6561fb9d55d", size = 20256, upload-time = "2025-03-25T10:14:55.034Z" },
+    { url = "https://files.pythonhosted.org/packages/5f/ed/539768cf28c661b5b068d66d96a2f155c4971a5d55684a514c1a0e0dec2f/python_dotenv-1.1.1-py3-none-any.whl", hash = "sha256:31f23644fe2602f88ff55e1f5c79ba497e01224ee7737937930c448e4d0e24dc", size = 20556, upload-time = "2025-06-24T04:21:06.073Z" },
 ]
 
 [[package]]
@@ -88,7 +88,7 @@ wheels = [
 ]
 
 [[package]]
-name = "tgbot-template"
+name = "telegram-bot-template"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
