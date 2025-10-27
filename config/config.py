@@ -1,37 +1,73 @@
+import os
 from urllib.parse import urlparse
-from dotenv import load_dotenv
-from os import getenv
 
-load_dotenv()
-
-
-class BotConfig:
-    def __init__(self):
-        self.admins: list[int] = list(
-            map(int, getenv("ADMINS".replace(" ", "")).split(","))
-        )
-        self.bot_token = getenv("BOT_TOKEN")
-        self.api_id = getenv("API_ID")
-        self.api_hash = getenv("API_HASH")
-        self.proxy: None | BotConfig._Proxy = self._Proxy(getenv("PROXY", None))
-        self.debug = getenv("DEBUG", "False").lower() == "true"
-
-    class _Proxy:
-        def __init__(self, url: str):
-            self._url = urlparse(url) if url else None
-            self.url = self._url.geturl() if self._url else None
-
-        @property
-        def dict_format(self):
-            if not self._url:
-                return None
-            return {
-                "scheme": self._url.scheme,
-                "hostname": self._url.hostname,
-                "port": self._url.port,
-                "username": self._url.username,
-                "password": self._url.password,
-            }
+from pydantic import Field, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-cfg = BotConfig()
+class WatchdogSettings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=None,
+        extra="ignore",
+    )
+    is_running: bool = Field(default=False)
+    """运行中"""
+    restart_count: int = Field(default=0)
+    """重启次数"""
+    max_restart_count: int = Field(default=5)
+    """意外断开连接时，最大重启次数"""
+    exit_flag: bool = Field(default=False)
+    """退出标志"""
+
+    def update_bot_restart_count(self):
+        self.restart_count += 1
+        os.environ["RESTART_COUNT"] = str(self.restart_count)
+
+    def reset_bot_restart_count(self):
+        self.restart_count = 0
+        os.environ["RESTART_COUNT"] = "0"
+
+
+class BotSettings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    admins: list[int] = Field(...)
+    """管理员 ID 列表"""
+    bot_token: str = Field(...)
+    api_id: str = Field(...)
+    api_hash: str = Field(...)
+    bot_proxy: dict | None = Field(default=None)
+    debug: bool = Field(default=False)
+
+    @field_validator("admins", mode="before")
+    @classmethod
+    def parse_admins(cls, v):
+        if isinstance(v, list):
+            return [int(x) if not isinstance(x, int) else x for x in v]
+        if isinstance(v, int):
+            return [v]
+        if isinstance(v, str):
+            return [int(x.strip()) for x in v.replace(" ", "").split(",") if x.strip()]
+        return v
+
+    @field_validator("bot_proxy", mode="before")
+    @classmethod
+    def proxy_config(cls, v: str | None = None) -> dict | None:
+        url = urlparse(v) if v else None
+        if not url:
+            return None
+        return {
+            "scheme": url.scheme,
+            "hostname": url.hostname,
+            "port": url.port,
+            "username": url.username,
+            "password": url.password,
+        }
+
+
+bs = BotSettings()  # type: ignore
+ws = WatchdogSettings()  # type: ignore

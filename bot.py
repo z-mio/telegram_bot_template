@@ -2,42 +2,50 @@ import asyncio
 import sys
 
 from pyrogram import Client
-from config.config import cfg
+from pyrogram.handlers import ConnectHandler, DisconnectHandler
+
+from config.config import bs, ws
 from log import logger
 from utils.optimized_event_loop import setup_optimized_event_loop
+from watchdog import on_connect, on_disconnect
+
+logger.remove()
+
+if bs.debug:
+    logger.add(sys.stderr, level="DEBUG")
+    logger.debug("Debug 模式已启用")
+else:
+    logger.add("logs/bot.log", rotation="10 MB", level="INFO")
+    logger.add(sys.stderr, level="INFO")
 
 setup_optimized_event_loop()
 loop = asyncio.new_event_loop()
 
-logger.remove()
-if cfg.debug:
-    logger.add(sys.stderr, level="DEBUG")
-    logger.debug("Debug模式已启用")
-else:
-    logger.add("logs/bot.log", rotation="5 MB", level="INFO")
-    logger.add(sys.stderr, level="INFO")
-
 
 class Bot(Client):
     def __init__(self):
-        self.cfg = cfg
-
         super().__init__(
-            f"{self.cfg.bot_token.split(':')[0]}_bot",
-            api_id=self.cfg.api_id,
-            api_hash=self.cfg.api_hash,
-            bot_token=self.cfg.bot_token,
-            plugins=dict(root="plugins"),
-            proxy=self.cfg.proxy.dict_format,
+            f"{bs.bot_token.split(':')[0]}_bot",
+            api_id=bs.api_id,
+            api_hash=bs.api_hash,
+            bot_token=bs.bot_token,
+            plugins={"root": "plugins"},
+            proxy=bs.bot_proxy,
             loop=loop,
+            workdir="session",
         )
 
     async def start(self, **kwargs):
-        logger.info("Bot开始运行...")
+        self.init_watchdog()
         await super().start()
 
     async def stop(self, *args):
+        ws.exit_flag = True
         await super().stop()
+
+    def init_watchdog(self):
+        self.add_handler(ConnectHandler(on_connect))
+        self.add_handler(DisconnectHandler(on_disconnect))
 
 
 if __name__ == "__main__":

@@ -7,9 +7,30 @@ requires-python = ">=3.12"
 dependencies = [
     "kurigram>=2.2.3",
     "loguru>=0.7.3",
+    "pydantic>=2.12.3",
+    "pydantic-settings>=2.11.0",
     "python-dotenv>=1.1.0",
     "pyyaml>=6.0.2",
     "tgcrypto>=1.2.5",
     "uvloop>=0.22.1 ; sys_platform != 'win32'",
     "winloop>=0.3.1 ; sys_platform == 'win32'",
 ]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle 错误检查
+    "W", # pycodestyle 警告检查
+    "F", # pyflakes 错误检查
+    "I", # isort 导入排序
+    "B", # flake8-bugbear 常见错误检查
+    "C4", # flake8-comprehensions 列表/字典推导式检查
+    "UP", # pyupgrade 自动升级语法
+]
+ignore = [
+    "B008", # 不在参数默认值中执行函数调用
+    "C901", # 函数复杂度过高
+]
+
