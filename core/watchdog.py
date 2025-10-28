@@ -6,7 +6,7 @@ from pyrogram import Client
 
 from log import logger
 
-from .config import ws
+from .config import bs, ws
 
 logger = logger.bind(name="Watchdog")
 
@@ -46,6 +46,9 @@ async def on_disconnect(cli: Client, __) -> None:
     # 断开连接
     if ws.restart_count >= ws.max_restart_count:
         exit(f"重启次数已达上限 ({ws.max_restart_count} 次), 结束进程")
+
+    if bs.debug:
+        exit("Bot 已断开连接, 目前处于调试模式, 已跳过重启")
 
     try:
         ws.update_bot_restart_count()

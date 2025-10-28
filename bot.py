@@ -13,7 +13,7 @@ logger.remove()
 
 if bs.debug:
     logger.add(sys.stderr, level="DEBUG", format=logger_format)
-    logger.debug("Debug 模式已启用")
+    logger.debug("调试模式已启用")
 else:
     logger.add(sys.stderr, level="INFO", format=logger_format)
 logger.add(
