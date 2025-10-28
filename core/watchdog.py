@@ -50,8 +50,10 @@ async def on_disconnect(cli: Client, __) -> None:
     try:
         ws.update_bot_restart_count()
         logger.warning(f"Bot 已断开连接, 尝试重启... | {ws.restart_count}/{ws.max_restart_count}")
+
         if ws.restart_count == ws.remove_session_after_restart:
             await remove_session_file(cli)
+
         python = sys.executable
         os.execv(python, [python] + sys.argv)
     except Exception as e:
