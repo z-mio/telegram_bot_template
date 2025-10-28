@@ -47,6 +47,10 @@ class BotSettings(BaseSettings):
     bot_workdir: Path = Field(default=Path("sessions"))
     debug: bool = Field(default=False)
 
+    def model_post_init(self, __context) -> None:
+        """模型初始化后的操作"""
+        self.bot_workdir.mkdir(parents=True, exist_ok=True)
+
     @field_validator("admins", mode="before")
     @classmethod
     def parse_admins(cls, v):
