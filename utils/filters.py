@@ -1,7 +1,7 @@
 from pyrogram import filters
 from pyrogram.types import Message
 
-from config.config import bs
+from core.config import bs
 
 
 async def _is_admin(_, __, msg: Message):

@@ -2,8 +2,9 @@ import asyncio
 import os
 import sys
 
-from config.config import ws
 from log import logger
+
+from .config import ws
 
 logger = logger.bind(name="Watchdog")
 

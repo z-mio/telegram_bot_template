@@ -4,19 +4,26 @@ import sys
 from pyrogram import Client
 from pyrogram.handlers import ConnectHandler, DisconnectHandler
 
-from config.config import bs, ws
-from log import logger
+from core.config import bs, ws
+from core.watchdog import on_connect, on_disconnect
+from log import logger, logger_format
 from utils.optimized_event_loop import setup_optimized_event_loop
-from watchdog import on_connect, on_disconnect
 
 logger.remove()
 
 if bs.debug:
-    logger.add(sys.stderr, level="DEBUG")
+    logger.add(sys.stderr, level="DEBUG", format=logger_format)
     logger.debug("Debug 模式已启用")
 else:
-    logger.add("logs/bot.log", rotation="10 MB", level="INFO")
-    logger.add(sys.stderr, level="INFO")
+    logger.add(sys.stderr, level="INFO", format=logger_format)
+logger.add(
+    "logs/bot.log",
+    rotation="10 MB",
+    level="INFO",
+    format=logger_format,
+    # serialize=True,
+    enqueue=True,
+)
 
 setup_optimized_event_loop()
 loop = asyncio.new_event_loop()
@@ -32,7 +39,7 @@ class Bot(Client):
             plugins={"root": "plugins"},
             proxy=bs.bot_proxy,
             loop=loop,
-            workdir="session",
+            workdir=bs.bot_workdir,
         )
 
     async def start(self, **kwargs):

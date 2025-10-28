@@ -41,6 +41,7 @@ class BotSettings(BaseSettings):
     api_id: str = Field(...)
     api_hash: str = Field(...)
     bot_proxy: dict | None = Field(default=None)
+    bot_workdir: str = Field(default="sessions")
     debug: bool = Field(default=False)
 
     @field_validator("admins", mode="before")
