@@ -1,6 +1,6 @@
 # Tg Bot Template
 
-基于 Pyrogram 库的 Telegram Bot 模板
+基于 Pyrogram 库的 Telegram Bot 模板  
 包含以下模块:
 
 - 日志模块
