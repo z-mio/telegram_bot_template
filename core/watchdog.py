@@ -2,6 +2,8 @@ import asyncio
 import os
 import sys
 
+from pyrogram import Client
+
 from log import logger
 
 from .config import ws
@@ -27,7 +29,7 @@ async def on_connect(_, __) -> None:
     asyncio.create_task(reset_count_task())
 
 
-async def on_disconnect(_, __) -> None:
+async def on_disconnect(cli: Client, __) -> None:
     """Bot 断开连接回调函数"""
     if ws.exit_flag:
         ws.is_running = False
@@ -46,10 +48,25 @@ async def on_disconnect(_, __) -> None:
         exit(f"重启次数已达上限 ({ws.max_restart_count} 次), 结束进程")
 
     try:
-        logger.warning(f"Bot 已断开连接, 尝试重启... | {ws.restart_count + 1}/{ws.max_restart_count}")
         ws.update_bot_restart_count()
+        logger.warning(f"Bot 已断开连接, 尝试重启... | {ws.restart_count}/{ws.max_restart_count}")
+        if ws.restart_count == ws.remove_session_after_restart:
+            await remove_session_file(cli)
         python = sys.executable
         os.execv(python, [python] + sys.argv)
     except Exception as e:
         logger.exception(e)
         exit("重启失败, 结束进程, 以上为错误信息")
+
+
+async def remove_session_file(cli: Client) -> None:
+    """删除会话文件"""
+    logger.warning("尝试删除会话文件...")
+    try:
+        await cli.session.stop()
+        await cli.storage.close()
+        if (session := cli.workdir / f"{cli.name}.session") and session.exists():
+            os.remove(session)
+            logger.warning(f"会话文件已移除: {session}")
+    except Exception as e:
+        logger.error(f"移除会话文件失败: {e}")

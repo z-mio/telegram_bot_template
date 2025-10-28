@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from urllib.parse import urlparse
 
 from pydantic import Field, field_validator
@@ -14,7 +15,9 @@ class WatchdogSettings(BaseSettings):
     """运行中"""
     restart_count: int = Field(default=0)
     """重启次数"""
-    max_restart_count: int = Field(default=5)
+    remove_session_after_restart: int = Field(default=3)
+    """重启失败几次后删除会话文件"""
+    max_restart_count: int = Field(default=6)
     """意外断开连接时，最大重启次数"""
     exit_flag: bool = Field(default=False)
     """退出标志"""
@@ -41,7 +44,7 @@ class BotSettings(BaseSettings):
     api_id: str = Field(...)
     api_hash: str = Field(...)
     bot_proxy: dict | None = Field(default=None)
-    bot_workdir: str = Field(default="sessions")
+    bot_workdir: Path = Field(default=Path("sessions"))
     debug: bool = Field(default=False)
 
     @field_validator("admins", mode="before")
@@ -68,6 +71,10 @@ class BotSettings(BaseSettings):
             "username": url.username,
             "password": url.password,
         }
+
+    @property
+    def bot_seesion_name(self) -> str:
+        return f"bot_{self.bot_token.split(':')[0]}"
 
 
 bs = BotSettings()  # type: ignore
