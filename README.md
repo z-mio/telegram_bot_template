@@ -1,6 +1,14 @@
 # Tg Bot Template
 
-描述
+基于 Pyrogram 库的 Telegram Bot 模板
+包含以下模块:
+
+- 日志模块
+- 配置模块
+- 快捷管理脚本
+- `uvloop` / `winloop` 优化
+- 看门狗模块(Bot掉线自动重启)
+- Dockerfile & Docker Compose
 
 ## 环境变量
 
@@ -8,11 +16,11 @@
 
 | 名称          | 描述                            | 默认值     |
 |-------------|-------------------------------|---------|
+| `ADMINS`    | 管理员用户ID，多个用户用逗号分隔             |         |
 | `API_ID`    | 登录 https://my.telegram.org 获取 |         |
 | `API_HASH`  | 登录 https://my.telegram.org 获取 |         |
 | `BOT_TOKEN` | 在 https://t.me/BotFather 获取   |         |
-| `ADMIN`     | 管理员用户ID，多个用户用逗号分隔             |         |
-| `PROXY`     | Bot 代理, 海外服务器不用填              |         |
+| `BOT_PROXY` | Bot 代理, 海外服务器不用填              |         |
 | `DEBUG`     | 调试模式开关，设置为 `true` 启用调试日志      | `false` |
 
 ## 开始部署
