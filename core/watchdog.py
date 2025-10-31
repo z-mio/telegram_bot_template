@@ -13,7 +13,11 @@ logger = logger.bind(name="Watchdog")
 
 async def reset_count_task():
     """重置重启次数任务"""
-    logger.info(f"第 {ws.restart_count} 次重连成功, 稳定运行 10 分钟后重置次数")
+    if ws.restart_count:
+        logger.info(f"第 {ws.restart_count} 次重启成功, 稳定运行 10 分钟后重置重启次数")
+    elif ws.disconnect_count:
+        logger.info("Bot 重连成功, 稳定运行 10 分钟后重置断开连接次数")
+
     await asyncio.sleep(600)
     ws.reset_bot_disconnect_count()
     ws.reset_bot_restart_count()
