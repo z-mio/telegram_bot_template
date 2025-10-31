@@ -13,20 +13,20 @@ logger = logger.bind(name="Watchdog")
 
 async def reset_count_task():
     """重置重启次数任务"""
-    logger.info(f"第 {ws.restart_count} 次重启成功, 稳定运行 10 分钟后重置重启次数")
+    logger.info(f"第 {ws.restart_count} 次重连成功, 稳定运行 10 分钟后重置次数")
     await asyncio.sleep(600)
+    ws.reset_bot_disconnect_count()
     ws.reset_bot_restart_count()
-    logger.info("已稳定运行 10 分钟, 重启次数已重置")
+    logger.info("已稳定运行 10 分钟, 次数已重置")
 
 
 async def on_connect(_, __) -> None:
     """Bot 连接成功回调函数"""
     ws.is_running = True
-    logger.info("Bot 开始运行...")
+    logger.success("Bot 开始运行...")
 
-    if not ws.restart_count:
-        return
-    asyncio.create_task(reset_count_task())
+    if ws.restart_count or ws.disconnect_count:
+        asyncio.create_task(reset_count_task())
 
 
 async def on_disconnect(cli: Client, __) -> None:
@@ -47,6 +47,11 @@ async def on_disconnect(cli: Client, __) -> None:
     if ws.restart_count >= ws.max_restart_count:
         exit(f"重启次数已达上限 ({ws.max_restart_count} 次), 结束进程")
 
+    if ws.disconnect_count < ws.max_disconnect_count:
+        ws.update_bot_disconnect_count()
+        logger.warning(f"Bot 已断开连接... | {ws.disconnect_count}/{ws.max_disconnect_count}")
+        return
+
     if bs.debug:
         exit("Bot 已断开连接, 目前处于调试模式, 已跳过重启")
 
@@ -54,7 +59,7 @@ async def on_disconnect(cli: Client, __) -> None:
         ws.update_bot_restart_count()
         logger.warning(f"Bot 已断开连接, 尝试重启... | {ws.restart_count}/{ws.max_restart_count}")
 
-        if ws.restart_count == ws.remove_session_after_restart:
+        if ws.restart_count == ws.remove_session_after_restart and not cli.in_memory:
             await remove_session_file(cli)
 
         python = sys.executable

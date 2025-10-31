@@ -16,6 +16,10 @@ class WatchdogSettings(BaseSettings):
     """运行中"""
     restart_count: int = Field(default=0)
     """重启次数"""
+    disconnect_count: int = Field(default=0)
+    """断开连接次数"""
+    max_disconnect_count: int = Field(default=3)
+    """最大断开连接次数, 超过后重启"""
     remove_session_after_restart: int = Field(default=3)
     """重启失败几次后删除会话文件"""
     max_restart_count: int = Field(default=6)
@@ -25,11 +29,19 @@ class WatchdogSettings(BaseSettings):
 
     def update_bot_restart_count(self):
         self.restart_count += 1
-        os.environ["RESTART_COUNT"] = str(self.restart_count)
+        os.environ["WD_RESTART_COUNT"] = str(self.restart_count)
 
     def reset_bot_restart_count(self):
         self.restart_count = 0
-        os.environ["RESTART_COUNT"] = "0"
+        os.environ["WD_RESTART_COUNT"] = "0"
+
+    def update_bot_disconnect_count(self):
+        self.disconnect_count += 1
+        os.environ["WD_DISCONNECT_COUNT"] = str(self.disconnect_count)
+
+    def reset_bot_disconnect_count(self):
+        self.disconnect_count = 0
+        os.environ["WD_DISCONNECT_COUNT"] = "0"
 
 
 class BotSettings(BaseSettings):
