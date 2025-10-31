@@ -10,6 +10,7 @@ class WatchdogSettings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=None,
         extra="ignore",
+        env_prefix="WD_",
     )
     is_running: bool = Field(default=False)
     """运行中"""
