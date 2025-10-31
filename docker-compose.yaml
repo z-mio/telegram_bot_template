@@ -6,4 +6,4 @@ services:
     volumes:
       - ./logs:/app/logs
       - ./sessions:/app/sessions
-    restart: no # 避免循环重启
+    restart: on-failure:2
