@@ -1,9 +1,10 @@
 import os
 from pathlib import Path
+from typing import Annotated
 from urllib.parse import urlparse
 
 from pydantic import Field, field_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class WatchdogSettings(BaseSettings):
@@ -51,7 +52,7 @@ class BotSettings(BaseSettings):
         extra="ignore",
     )
 
-    admins: list[int] = Field(...)
+    admins: Annotated[list[int], NoDecode] = Field(...)
     """管理员 ID 列表"""
     bot_token: str = Field(...)
     api_id: str = Field(...)
