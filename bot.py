@@ -32,7 +32,7 @@ loop = asyncio.new_event_loop()
 class Bot(Client):
     def __init__(self):
         super().__init__(
-            bs.bot_seesion_name,
+            bs.bot_session_name,
             api_id=bs.api_id,
             api_hash=bs.api_hash,
             bot_token=bs.bot_token,

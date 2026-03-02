@@ -91,7 +91,7 @@ class BotSettings(BaseSettings):
         }
 
     @property
-    def bot_seesion_name(self) -> str:
+    def bot_session_name(self) -> str:
         return f"bot_{self.bot_token.split(':')[0]}"
 
 
