@@ -52,11 +52,11 @@ class BotSettings(BaseSettings):
         extra="ignore",
     )
 
-    admins: Annotated[list[int], NoDecode] = Field(...)
+    admins: Annotated[list[int], NoDecode]
     """管理员 ID 列表"""
-    bot_token: str = Field(...)
-    api_id: str = Field(...)
-    api_hash: str = Field(...)
+    bot_token: str
+    api_id: str
+    api_hash: str
     bot_proxy: dict | None = Field(default=None)
     bot_workdir: Path = Field(default=Path("sessions"))
     debug: bool = Field(default=False)
