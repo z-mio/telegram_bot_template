@@ -7,7 +7,7 @@ from pyrogram.handlers import ConnectHandler, DisconnectHandler
 from core.config import bs, ws
 from core.watchdog import on_connect, on_disconnect
 from log import logger, logger_format
-from utils.optimized_event_loop import setup_optimized_event_loop
+from utils.event_loop import setup_optimized_event_loop
 
 logger.remove()
 
