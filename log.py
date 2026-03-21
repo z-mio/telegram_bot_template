@@ -1,5 +1,6 @@
 import inspect
 import logging
+import sys
 from typing import TYPE_CHECKING
 
 import loguru
@@ -15,6 +16,24 @@ logger_format = (
     "<cyan>{name}:{function}:{line}</cyan> | "
     "<level>[{extra[name]}] {message}</level>"
 )
+
+
+def setup_logging(debug: bool = False) -> None:
+    logger.remove()
+
+    level = "DEBUG" if debug else "INFO"
+    logger.add(sys.stderr, level=level, format=logger_format)
+
+    logger.add(
+        "logs/bot.log",
+        rotation="10 MB",
+        level="INFO",
+        format=logger_format,
+        enqueue=True,
+    )
+
+    if debug:
+        logger.debug("调试模式已启用")
 
 
 class InterceptHandler(logging.Handler):

@@ -1,29 +1,14 @@
 import asyncio
-import sys
 
 from pyrogram import Client
 from pyrogram.handlers import ConnectHandler, DisconnectHandler
 
 from core.config import bs, ws
 from core.watchdog import on_connect, on_disconnect
-from log import logger, logger_format
+from log import setup_logging
 from utils.event_loop import setup_optimized_event_loop
 
-logger.remove()
-
-if bs.debug:
-    logger.add(sys.stderr, level="DEBUG", format=logger_format)
-    logger.debug("调试模式已启用")
-else:
-    logger.add(sys.stderr, level="INFO", format=logger_format)
-logger.add(
-    "logs/bot.log",
-    rotation="10 MB",
-    level="INFO",
-    format=logger_format,
-    # serialize=True,
-    enqueue=True,
-)
+setup_logging(debug=bs.debug)
 
 setup_optimized_event_loop()
 loop = asyncio.new_event_loop()
