@@ -51,7 +51,3 @@ uv sync
 # 运行 Bot
 uv run bot.py 
 ```
-
-## 使用
-
-私聊 Bot 发送指令 `/menu` 即可自动设置菜单
