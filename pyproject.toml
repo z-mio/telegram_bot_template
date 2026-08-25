@@ -37,6 +37,7 @@ ignore = [
 [dependency-groups]
 dev = [
     "mypy>=2.1.0",
+    "ruff>=0.16.4",
 ]
 
 [tool.mypy]
