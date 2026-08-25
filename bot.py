@@ -36,7 +36,7 @@ class Bot(Client):
 
     async def start(self, **kwargs: Any) -> None:
         self.init_watchdog()
-        await super().start()
+        await super().start(**kwargs)
         await self.set_menu()
 
     async def stop(self, *args: Any, **kwargs: Any) -> None:
