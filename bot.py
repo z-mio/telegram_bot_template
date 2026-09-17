@@ -34,14 +34,16 @@ class Bot(Client):
             workdir=bs.bot_workdir,
         )
 
-    async def start(self, **kwargs: Any) -> None:
+    async def start(self, **kwargs: Any) -> Client:
         self.init_watchdog()
         await super().start(**kwargs)
         await self.set_menu()
+        return self
 
-    async def stop(self, *args: Any, **kwargs: Any) -> None:
+    async def stop(self, *args: Any, **kwargs: Any) -> Client:
         ws.exit_flag = True
         await super().stop(*args, **kwargs)
+        return self
 
     def init_watchdog(self) -> None:
         self.add_handler(ConnectHandler(on_connect))

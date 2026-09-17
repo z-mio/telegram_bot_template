@@ -1,11 +1,9 @@
 import os
 from pathlib import Path
 from typing import Annotated, Any
-from urllib.parse import urlparse
 
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
-from pyrogram.connection.transport import ProxyDict
 
 
 class WatchdogSettings(BaseSettings):
@@ -58,7 +56,7 @@ class BotSettings(BaseSettings):
     bot_token: str
     api_id: str
     api_hash: str
-    bot_proxy: ProxyDict | None = Field(default=None)
+    bot_proxy: str | None = Field(default=None)
     bot_workdir: Path = Field(default=Path("sessions"))
     debug: bool = Field(default=False)
 
@@ -76,18 +74,6 @@ class BotSettings(BaseSettings):
         if isinstance(v, str):
             return [int(x.strip()) for x in v.replace(" ", "").split(",") if x.strip()]
         raise ValueError("Invalid admins format")
-
-    @field_validator("bot_proxy", mode="before")
-    @classmethod
-    def proxy_config(cls, v: str | None = None) -> ProxyDict | None:
-        url = urlparse(v) if v else None
-        if not url:
-            return None
-        if not url.hostname or not url.port:
-            raise ValueError(f"Invalid proxy config: {v}")
-        return ProxyDict(
-            scheme=url.scheme, hostname=url.hostname, port=url.port, username=url.username, password=url.password
-        )
 
     @property
     def bot_session_name(self) -> str:
