@@ -1,4 +1,3 @@
-import asyncio
 from typing import Any
 
 from pyrogram import Client
@@ -13,7 +12,6 @@ from utils.event_loop import setup_optimized_event_loop
 setup_logging(debug=bs.debug)
 
 setup_optimized_event_loop()
-loop = asyncio.new_event_loop()
 
 COMMANDS = {
     "start": "开始",
@@ -30,7 +28,6 @@ class Bot(Client):
             bot_token=bs.bot_token,
             plugins={"root": "plugins"},
             proxy=bs.bot_proxy,
-            loop=loop,
             workdir=bs.bot_workdir,
         )
 
