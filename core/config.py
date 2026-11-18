@@ -25,6 +25,11 @@ class BotSettings(BaseSettings):
         """模型初始化后的操作"""
         self.bot_workdir.mkdir(parents=True, exist_ok=True)
 
+    @field_validator("bot_proxy", mode="before")
+    @classmethod
+    def empty_proxy_to_none(cls, v: Any) -> Any:
+        return v or None
+
     @field_validator("admins", mode="before")
     @classmethod
     def parse_admins(cls, v: Any) -> list[int]:
