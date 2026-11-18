@@ -1,11 +1,9 @@
 from typing import Any
 
 from pyrogram import Client
-from pyrogram.handlers import ConnectHandler, DisconnectHandler
 from pyrogram.types import BotCommand
 
-from core.config import bs, ws
-from core.watchdog import on_connect, on_disconnect
+from core.config import bs
 from log import logger, setup_logging
 
 setup_logging(debug=bs.debug)
@@ -29,19 +27,9 @@ class Bot(Client):
         )
 
     async def start(self, **kwargs: Any) -> Client:
-        self.init_watchdog()
         await super().start(**kwargs)
         await self.set_menu()
         return self
-
-    async def stop(self, *args: Any, **kwargs: Any) -> Client:
-        ws.exit_flag = True
-        await super().stop(*args, **kwargs)
-        return self
-
-    def init_watchdog(self) -> None:
-        self.add_handler(ConnectHandler(on_connect))
-        self.add_handler(DisconnectHandler(on_disconnect))
 
     async def set_menu(self) -> None:
         commands = await self.get_bot_commands()
