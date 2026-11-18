@@ -7,7 +7,7 @@
 - 配置模块
 - ruff配置
 - 快捷管理脚本
-- `uvloop` / `winloop` 优化
+- `uvloop` 优化
 - 看门狗模块(Bot掉线自动重启)
 - Dockerfile & Docker Compose
 

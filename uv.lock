@@ -487,7 +487,6 @@ dependencies = [
     { name = "python-dotenv" },
     { name = "tgcrypto" },
     { name = "uvloop", marker = "sys_platform != 'win32'" },
-    { name = "winloop", marker = "sys_platform == 'win32'" },
 ]
 
 [package.dev-dependencies]
@@ -505,7 +504,6 @@ requires-dist = [
     { name = "python-dotenv", specifier = ">=1.1.0" },
     { name = "tgcrypto", specifier = ">=1.2.5" },
     { name = "uvloop", marker = "sys_platform != 'win32'", specifier = ">=0.22.1" },
-    { name = "winloop", marker = "sys_platform == 'win32'", specifier = ">=0.3.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -592,24 +590,4 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/1a/e4/f0f252c65f9bf7c4042b1f707ef338d49f799da582234e1d3e6e2cfca291/win32_setctime-1.2.1.tar.gz", hash = "sha256:077b35471bf1ff1d71e165c919ddc0cecf51b8e1802f5d820d33a96e2f6717dd", size = 4983, upload-time = "2026-10-25T18:21:32.318Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bd/df/5593480bc1e932eeae28e4fa182ab68174edd0d77409ced3b6491d02d1d5/win32_setctime-1.2.1-py3-none-any.whl", hash = "sha256:a9edc685b35414bec69392c866ed82456ad125ac4a6a4b703ec1d8b462d4f477", size = 4215, upload-time = "2026-10-25T18:21:30.939Z" },
-]
-
-[[package]]
-name = "winloop"
-version = "0.8.3"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0f/c5/9309073e4cacbe329826fe191ae5ca166fbf5fc85f357b0942b193cec497/winloop-0.8.3.tar.gz", hash = "sha256:cf8b1926bb4dfd8b4335064f0885ced6a3050ca6ae9093affcd29bd2f0fb0ba3", size = 2816044, upload-time = "2026-11-10T20:43:49.939Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/17/e4/fc0f75451c190e57bd847a7d1955c510f5bde089cf8e72a501e7e416fb0d/winloop-0.8.3-cp312-cp312-win_amd64.whl", hash = "sha256:ae3771a94d7f03994bc94ac4b55fa7c10b50ec6202710b1c70d73a8b44c503bc", size = 730299, upload-time = "2026-11-10T20:43:33.25Z" },
-    { url = "https://files.pythonhosted.org/packages/88/ae/1f6537007e8556ce7c7c3b7337c1c217cf624cf1d7eb24af0faa5267fbd1/winloop-0.8.3-cp312-cp312-win_arm64.whl", hash = "sha256:cabf81564b73ad36b1f4b399ccab0072a75b5ebac0897b527f1e963492cc191d", size = 631193, upload-time = "2026-11-10T20:43:34.335Z" },
-    { url = "https://files.pythonhosted.org/packages/ec/9d/0440289d44ea2606593303175b7afeab0057f15f4fb0e2bec83b9e7869e1/winloop-0.8.3-cp313-cp313-win_amd64.whl", hash = "sha256:c7605aee8f2029d0be88b32a1454ac1fb83eab7e85fb083c2fdaa963298afc1c", size = 729106, upload-time = "2026-11-10T20:43:35.546Z" },
-    { url = "https://files.pythonhosted.org/packages/09/5a/91d34fa2c5dd48b14af6a6e1d8f4658bd61b559de9993450d1424caef418/winloop-0.8.3-cp313-cp313-win_arm64.whl", hash = "sha256:a5b2c8b11a71f53276930bab0577deb149ea5258332c4eb71af4f04cd02fb8db", size = 630718, upload-time = "2026-11-10T20:43:36.782Z" },
-    { url = "https://files.pythonhosted.org/packages/02/1a/017049b380607e5e8cbc87c60602310bf752443448b4bde9a9c80306f7f1/winloop-0.8.3-cp314-cp314-win_amd64.whl", hash = "sha256:590ec831b673c06b458037942880fb417859716b2ff0c98274a2eb24c6b061d0", size = 739547, upload-time = "2026-11-10T20:43:37.84Z" },
-    { url = "https://files.pythonhosted.org/packages/c2/5d/8242dee5eb15f5ac65f34c24ed948d10bcdc9fa3f1c7cb5c06affd62c88c/winloop-0.8.3-cp314-cp314-win_arm64.whl", hash = "sha256:39e2dbcfa1f8047c08a5470da783a2fb609846f2d139f764d3d033c49a415f2c", size = 645062, upload-time = "2026-11-10T20:43:39.225Z" },
-    { url = "https://files.pythonhosted.org/packages/b4/29/f7dad7bc1fb25792078ed72c47c37235d59e0d210014a171d2ed16b70eee/winloop-0.8.3-cp314-cp314t-win_amd64.whl", hash = "sha256:a7b415b6c22c2c7fa4111ef4ac4559f80a74246d03b46cf8a18ddccd5d0dddc4", size = 798274, upload-time = "2026-11-10T20:43:40.196Z" },
-    { url = "https://files.pythonhosted.org/packages/40/a0/7e58432b74a3128fd3366541936567d0ed43e0419148494f6e0820b9338c/winloop-0.8.3-cp314-cp314t-win_arm64.whl", hash = "sha256:b7e2a145411e66a712ecf77109cfec3aa3e1760f5963c6980c9cc3e2d91f7ac4", size = 694205, upload-time = "2026-11-10T20:43:41.434Z" },
-    { url = "https://files.pythonhosted.org/packages/7c/a6/794eec458cabcd0d8d76caef701f0bfcf6af22d3565adf842b8f3d674d61/winloop-0.8.3-cp315-cp315-win_amd64.whl", hash = "sha256:8f9bfd14736712995001dd8a86e9d6eb544d486bac543091f7b8ff81ab54021c", size = 738905, upload-time = "2026-11-10T20:43:42.845Z" },
-    { url = "https://files.pythonhosted.org/packages/70/1a/6824a737059d09c4755dff9af759efe8ee8e911e4e4ff44211b1ce10781d/winloop-0.8.3-cp315-cp315-win_arm64.whl", hash = "sha256:cc606cc0d09b291628002d27cf0f5f5f3d5c9730efd23e74fa883d1d71e005a4", size = 645540, upload-time = "2026-11-10T20:43:44.094Z" },
-    { url = "https://files.pythonhosted.org/packages/e8/bf/64466ad1aa57bebec3f13e6aefa25333fbff6bc131d4623faa22b4ecaa9c/winloop-0.8.3-cp315-cp315t-win_amd64.whl", hash = "sha256:ff6577c66b04826c689eae817763c526d20debd26da7eaf7c2b3367b85a8c1f9", size = 799194, upload-time = "2026-11-10T20:43:45.526Z" },
-    { url = "https://files.pythonhosted.org/packages/4d/45/56d90f59906576ef58dd239ae118ae6a4a3aa7e030c9fcf3a9bb70639f66/winloop-0.8.3-cp315-cp315t-win_arm64.whl", hash = "sha256:8008f6a80d92cf2cbf8a545302d9205a956d111afc996809d7000022c2494657", size = 693082, upload-time = "2026-11-10T20:43:46.648Z" },
 ]

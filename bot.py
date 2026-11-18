@@ -7,11 +7,8 @@ from pyrogram.types import BotCommand
 from core.config import bs, ws
 from core.watchdog import on_connect, on_disconnect
 from log import logger, setup_logging
-from utils.event_loop import setup_optimized_event_loop
 
 setup_logging(debug=bs.debug)
-
-setup_optimized_event_loop()
 
 COMMANDS = {
     "start": "开始",
