@@ -5,18 +5,6 @@ from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
-class WatchdogSettings(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=None,
-        extra="ignore",
-        env_prefix="WD_",
-    )
-    exit_flag: bool = Field(default=False)
-    """退出标志"""
-    reconnect_grace_seconds: int = Field(default=120)
-    """主连接断开后等待自动重连的时间(秒), 超时仍未恢复则结束进程交给容器重启"""
-
-
 class BotSettings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -54,4 +42,3 @@ class BotSettings(BaseSettings):
 
 
 bs = BotSettings()  # type: ignore
-ws = WatchdogSettings()
